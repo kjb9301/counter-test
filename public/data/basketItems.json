@@ -1,0 +1,26 @@
+{
+  "basketItems": [
+    {
+      "id": 1,
+      "title": "유칼립투스-블랙잭",
+      "deliveryPlace": "seoul",
+      "deliveryType": "express",
+      "productOption": "small",
+      "productImage": "https://okkot.s3.ap-northeast-2.amazonaws.com/1578550539502.png",
+      "price": 7500,
+      "etcTitle": "마스크 끈",
+      "etcPrice": 1500
+    },
+    {
+      "id": 2,
+      "title": "레드브릿지",
+      "deliveryPlace": "incheon",
+      "deliveryType": "direct",
+      "productOption": "small",
+      "productImage": "https://okkot.s3.ap-northeast-2.amazonaws.com/1578550539560.png",
+      "price": 15500,
+      "etcTitle": "가시제거기",
+      "etcPrice": 3500
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "deliveryFee": [
+    {
+      "deliveryType": "express",
+      "deliveryPrice": 15000
+    },
+    {
+      "deliveryType": "direct",
+      "deliveryPrice": 32000
+    }
+  ]
+}
