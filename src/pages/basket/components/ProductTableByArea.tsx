@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ProductTableHeader from './ProductTableHeader';
 import ProductCategoryRow from './ProductCategoryRow';
 import ProductRow from './ProductRow';
 import ProductSum from './ProductSum';
@@ -8,7 +9,7 @@ import ProductSum from './ProductSum';
 function ProductTableByArea() {
   return (
     <Wrapper>
-      <input type='checkbox' /> 전체선택
+      <ProductTableHeader />
       <ProductCategoryRow />
       <ProductRow />
       <ProductSum />
