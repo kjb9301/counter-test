@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BsHeart, BsTrash } from 'react-icons/bs';
 
 import QuantityCounter from './QuantityCounter';
 
@@ -52,7 +53,8 @@ function ProductRow() {
         </SubCell>
       </Cell>
       <Cell width='10%' direction=''>
-        관리
+        <BsHeart />
+        <BsTrash />
       </Cell>
     </Wrapper>
   );
