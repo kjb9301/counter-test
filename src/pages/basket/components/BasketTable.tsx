@@ -17,16 +17,17 @@ type BasketItem = {
 };
 
 function BasketTable() {
-  const [basketList, setBasketList] = useState<BasketItem[] | null>(null);
-  console.log(!basketList);
+  const [basketList, setBasketList] = useState<BasketItem[][] | null>(null);
+  console.log(basketList);
   useEffect(() => {
     const getData = async () => {
       await axios
         .get('data/basketItems.json')
         .then((res) => {
           if (res.status === 200) {
-            const basketItems = res.data.basketItems;
-            setBasketList(basketItems);
+            const basketItems: BasketItem[] = res.data.basketItems;
+            const data = createProductListByArea(basketItems);
+            setBasketList(data);
           }
         })
         .catch((err) => {
@@ -35,6 +36,22 @@ function BasketTable() {
     };
     getData();
   }, []);
+
+  const createProductListByArea = (basketList: BasketItem[]) => {
+    const deliveryPlaceArr = basketList.map((item) => item.deliveryPlace);
+    const noDupdeliveryPlaceArr = deliveryPlaceArr.filter(
+      (item, index, arr) => arr.indexOf(item) === index
+    );
+
+    const basketListByArea: BasketItem[][] = [];
+    noDupdeliveryPlaceArr.forEach((place, index) => {
+      basketListByArea[index] = basketList.filter(
+        (item) => place == item.deliveryPlace
+      );
+    });
+
+    return basketListByArea;
+  };
 
   if (!basketList) return null;
   return (
