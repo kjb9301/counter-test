@@ -71,6 +71,12 @@ const Cell = styled.li<{ width: string; direction: string }>`
   flex-direction: ${(props) => (props.direction !== '' ? props.direction : '')};
   justify-content: center;
   align-items: center;
+
+  svg {
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
 `;
 
 const SubCell = styled.div<{ padding: string }>`
