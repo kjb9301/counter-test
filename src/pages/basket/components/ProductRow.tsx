@@ -2,9 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { BsHeart, BsTrash } from 'react-icons/bs';
 
+import { BasketItem } from '../../../lib/types/basketPageTypes';
+
 import QuantityCounter from './QuantityCounter';
 
-function ProductRow() {
+type ProductRowProps = {
+  product: BasketItem;
+};
+
+function ProductRow({ product }: ProductRowProps) {
+  const {
+    title,
+    productImage,
+    productOption,
+    etcTitle,
+    price,
+    etcPrice,
+  } = product;
   return (
     <Wrapper>
       <Cell width='5%' direction=''>
@@ -17,23 +31,23 @@ function ProductRow() {
           </ImgContainer>
         </SubCell>
         <SubCell padding='5px 5px'>
-          <Text>유칼립투스-블랙잭</Text>
+          <Text>{title}</Text>
         </SubCell>
       </Cell>
       <Cell width='20%' direction='column'>
         <SubCell padding='5px 0px'>
-          <Text>옵션</Text>
+          <Text>{productOption}</Text>
         </SubCell>
         <SubCell padding='5px 0px'>
-          <Text>추가상품</Text>
+          <Text>{etcTitle}</Text>
         </SubCell>
       </Cell>
       <Cell width='15%' direction='column'>
         <SubCell padding='5px 0px'>
-          <Text>7500</Text>
+          <Text>{price}원</Text>
         </SubCell>
         <SubCell padding='5px 0px'>
-          <Text>1500</Text>
+          <Text>{etcPrice}원</Text>
         </SubCell>
       </Cell>
       <Cell width='15%' direction='column'>

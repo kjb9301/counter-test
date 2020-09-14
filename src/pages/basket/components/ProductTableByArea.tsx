@@ -1,17 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { BasketItem } from '../../../lib/types/basketPageTypes';
+
 import ProductTableHeader from './ProductTableHeader';
 import ProductCategoryRow from './ProductCategoryRow';
 import ProductRow from './ProductRow';
 import ProductSum from './ProductSum';
 
-function ProductTableByArea() {
+type ProductTableByAreaProps = {
+  list: BasketItem[];
+};
+
+function ProductTableByArea({ list }: ProductTableByAreaProps) {
   return (
     <Wrapper>
       <ProductTableHeader />
       <ProductCategoryRow />
-      <ProductRow />
+      {list.map((product) => {
+        return <ProductRow key={product.id} product={product} />;
+      })}
       <ProductSum />
     </Wrapper>
   );

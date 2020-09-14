@@ -8,6 +8,7 @@ import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
 import ProductTableByArea from './ProductTableByArea';
 
 function BasketTable() {
+  console.log('basket table');
   const { basketItemsByArea } = useBasketState();
   const dispatch = useBasketDispatch();
 
@@ -52,7 +53,9 @@ function BasketTable() {
   return (
     <Wrapper>
       <input type='checkbox' /> 전체선택
-      <ProductTableByArea />
+      {basketItemsByArea.map((list) => {
+        return <ProductTableByArea list={list} />;
+      })}
     </Wrapper>
   );
 }
@@ -61,4 +64,4 @@ const Wrapper = styled.div`
   border: 1px solid red;
 `;
 
-export default React.memo(BasketTable);
+export default BasketTable;
