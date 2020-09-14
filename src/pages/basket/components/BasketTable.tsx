@@ -18,7 +18,7 @@ type BasketItem = {
 
 function BasketTable() {
   const [basketList, setBasketList] = useState<BasketItem[][] | null>(null);
-  console.log(basketList);
+
   useEffect(() => {
     const getData = async () => {
       await axios
@@ -26,8 +26,9 @@ function BasketTable() {
         .then((res) => {
           if (res.status === 200) {
             const basketItems: BasketItem[] = res.data.basketItems;
-            const data = createProductListByArea(basketItems);
-            setBasketList(data);
+            // const data = createProductListByArea(basketItems);
+
+            // setBasketList(data);
           }
         })
         .catch((err) => {
