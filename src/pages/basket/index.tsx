@@ -1,17 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { BasketProvider } from '../../contexts/BasketProvider';
+
 import Header from './components/Header';
 import UserInfo from './components/UserInfo';
 import BasketTable from './components/BasketTable';
 
 function BasketPage() {
   return (
-    <Wrapper>
-      <Header />
-      <UserInfo />
-      <BasketTable />
-    </Wrapper>
+    <BasketProvider>
+      <Wrapper>
+        <Header />
+        <UserInfo />
+        <BasketTable />
+      </Wrapper>
+    </BasketProvider>
   );
 }
 

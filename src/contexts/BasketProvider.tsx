@@ -4,23 +4,35 @@ import { BasketItem, DeliveryFee } from '../lib/types/basketPageTypes';
 
 type InitialState = {
   basketItems: BasketItem[] | null;
+  basketItemsByArea: BasketItem[][] | null;
   deliveryFees: DeliveryFee[] | null;
 };
 
-type Action = any;
+type Action = {
+  type: 'GET_BASKET_ITEMS';
+  payload: { list: BasketItem[]; listByArea: BasketItem[][] };
+};
 
 type InitialDispatch = Dispatch<Action>;
+
+const initialState: InitialState = {
+  basketItems: null,
+  basketItemsByArea: null,
+  deliveryFees: null,
+};
 
 export const StateContext = createContext<InitialState | null>(null);
 export const DispatchContext = createContext<InitialDispatch | null>(null);
 
-const initialState = {
-  basketItems: null,
-  deliveryFees: null,
-};
-
 function basketReducer(state: InitialState, action: Action): InitialState {
   switch (action.type) {
+    case 'GET_BASKET_ITEMS':
+      const { list, listByArea } = action.payload;
+      return {
+        ...state,
+        basketItems: list,
+        basketItemsByArea: listByArea,
+      };
     default:
       throw new Error('unhandled action');
   }

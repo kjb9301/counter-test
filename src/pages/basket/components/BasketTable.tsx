@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import { BasketItem } from '../../../lib/types/basketPageTypes';
+import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
+
 import ProductTableByArea from './ProductTableByArea';
 
-type BasketItem = {
-  id: number;
-  title: string;
-  deliveryPlace: string;
-  deliveryType: string;
-  productOption: string;
-  productImage: string;
-  price: number;
-  etcTitle: string;
-  etcPrice: number;
-};
-
 function BasketTable() {
-  const [basketList, setBasketList] = useState<BasketItem[][] | null>(null);
+  const { basketItemsByArea } = useBasketState();
+  const dispatch = useBasketDispatch();
 
   useEffect(() => {
     const getData = async () => {
@@ -25,10 +17,12 @@ function BasketTable() {
         .get('data/basketItems.json')
         .then((res) => {
           if (res.status === 200) {
-            const basketItems: BasketItem[] = res.data.basketItems;
-            // const data = createProductListByArea(basketItems);
-
-            // setBasketList(data);
+            const basketItems = res.data.basketItems;
+            const basketItemsByArea = createProductListByArea(basketItems);
+            dispatch({
+              type: 'GET_BASKET_ITEMS',
+              payload: { list: basketItems, listByArea: basketItemsByArea },
+            });
           }
         })
         .catch((err) => {
@@ -54,7 +48,7 @@ function BasketTable() {
     return basketListByArea;
   };
 
-  if (!basketList) return null;
+  if (!basketItemsByArea) return null;
   return (
     <Wrapper>
       <input type='checkbox' /> 전체선택
@@ -67,4 +61,4 @@ const Wrapper = styled.div`
   border: 1px solid red;
 `;
 
-export default BasketTable;
+export default React.memo(BasketTable);
