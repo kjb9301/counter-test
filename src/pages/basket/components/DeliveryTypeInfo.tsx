@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useBasketDispatch, useBasketState } from '../../../hooks/useContext';
 
 import DeliveryTypeList from './DeliveryTypeList';
+import DeliveryTypeMsg from './DeliveryTypeMsg';
 
 function DeliveryTypeInfo() {
   const { deliveryFees } = useBasketState();
@@ -30,14 +31,14 @@ function DeliveryTypeInfo() {
   if (!deliveryFees) return null;
   return (
     <Wrapper>
-      <DeliveryTypeList />
+      <DeliveryTypeList deliveryFees={deliveryFees} />
+      <DeliveryTypeMsg />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  border: 1px solid red;
   margin-bottom: 20px;
 `;
 
-export default DeliveryTypeInfo;
+export default React.memo(DeliveryTypeInfo);

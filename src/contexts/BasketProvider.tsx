@@ -6,6 +6,10 @@ type InitialState = {
   basketItems: BasketItem[] | null;
   basketItemsByArea: BasketItem[][] | null;
   deliveryFees: DeliveryFee[] | null;
+  deliveryType: {
+    type: string;
+    price: number;
+  };
 };
 
 type Action =
@@ -16,6 +20,10 @@ type Action =
   | {
       type: 'GET_DELIVERY_FEES';
       payload: DeliveryFee[];
+    }
+  | {
+      type: 'SELECT_DELIVERY_TYPE';
+      payload: { type: string; price: number };
     };
 
 type InitialDispatch = Dispatch<Action>;
@@ -24,6 +32,10 @@ const initialState: InitialState = {
   basketItems: null,
   basketItemsByArea: null,
   deliveryFees: null,
+  deliveryType: {
+    type: '',
+    price: 0,
+  },
 };
 
 export const StateContext = createContext<InitialState | null>(null);
@@ -42,6 +54,15 @@ function basketReducer(state: InitialState, action: Action): InitialState {
       return {
         ...state,
         deliveryFees: action.payload,
+      };
+    case 'SELECT_DELIVERY_TYPE':
+      const { type, price } = action.payload;
+      return {
+        ...state,
+        deliveryType: {
+          type,
+          price,
+        },
       };
     default:
       throw new Error('unhandled action');
