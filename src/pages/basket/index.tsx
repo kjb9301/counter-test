@@ -7,6 +7,7 @@ import Header from './components/Header';
 import DeliveryTypeInfo from './components/DeliveryTypeInfo';
 import UserInfo from './components/UserInfo';
 import BasketTable from './components/BasketTable';
+import ScrollToTop from '../../components/ScrollToTop';
 
 function BasketPage() {
   return (
@@ -16,14 +17,16 @@ function BasketPage() {
         <UserInfo />
         <DeliveryTypeInfo />
         <BasketTable />
+        <ScrollToTop />
       </Wrapper>
     </BasketProvider>
   );
 }
 
 const Wrapper = styled.main`
-  border: 1px solid red;
-  padding: 30px;
+  width: 80%;
+  padding: 30px 50px;
+  margin: 0 auto;
 `;
 
 export default BasketPage;
