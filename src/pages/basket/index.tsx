@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { BasketProvider } from '../../contexts/BasketProvider';
 
 import Header from './components/Header';
+import DeliveryTypeInfo from './components/DeliveryTypeInfo';
 import UserInfo from './components/UserInfo';
 import BasketTable from './components/BasketTable';
 
@@ -13,6 +14,7 @@ function BasketPage() {
       <Wrapper>
         <Header />
         <UserInfo />
+        <DeliveryTypeInfo />
         <BasketTable />
       </Wrapper>
     </BasketProvider>

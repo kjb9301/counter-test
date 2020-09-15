@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { BsHeart, BsTrash } from 'react-icons/bs';
 
@@ -22,11 +22,6 @@ function ProductRow({ product }: ProductRowProps) {
   } = product;
 
   const { quantity, etcQuantity, increase, decrease } = useCounter();
-  // const total = price * quantity + etcPrice * etcQuantity;
-
-  // useEffect(() => {
-  //   setTotal(total);
-  // }, [total]);
 
   return (
     <Wrapper>

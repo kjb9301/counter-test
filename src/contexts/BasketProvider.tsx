@@ -8,10 +8,15 @@ type InitialState = {
   deliveryFees: DeliveryFee[] | null;
 };
 
-type Action = {
-  type: 'GET_BASKET_ITEMS';
-  payload: { list: BasketItem[]; listByArea: BasketItem[][] };
-};
+type Action =
+  | {
+      type: 'GET_BASKET_ITEMS';
+      payload: { list: BasketItem[]; listByArea: BasketItem[][] };
+    }
+  | {
+      type: 'GET_DELIVERY_FEES';
+      payload: DeliveryFee[];
+    };
 
 type InitialDispatch = Dispatch<Action>;
 
@@ -32,6 +37,11 @@ function basketReducer(state: InitialState, action: Action): InitialState {
         ...state,
         basketItems: list,
         basketItemsByArea: listByArea,
+      };
+    case 'GET_DELIVERY_FEES':
+      return {
+        ...state,
+        deliveryFees: action.payload,
       };
     default:
       throw new Error('unhandled action');
