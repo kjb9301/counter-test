@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { BsHeart, BsTrash } from 'react-icons/bs';
 
 import { BasketItem } from '../../../lib/types/basketPageTypes';
+import { useCounter } from '../../../hooks/useCounter';
 
 import QuantityCounter from './QuantityCounter';
 
@@ -19,6 +20,14 @@ function ProductRow({ product }: ProductRowProps) {
     price,
     etcPrice,
   } = product;
+
+  const { quantity, etcQuantity, increase, decrease } = useCounter();
+  // const total = price * quantity + etcPrice * etcQuantity;
+
+  // useEffect(() => {
+  //   setTotal(total);
+  // }, [total]);
+
   return (
     <Wrapper>
       <Cell width='5%' direction=''>
@@ -27,7 +36,7 @@ function ProductRow({ product }: ProductRowProps) {
       <Cell width='20%' direction='row'>
         <SubCell padding='10px 10px'>
           <ImgContainer>
-            <Image src='https://okkot.s3.ap-northeast-2.amazonaws.com/1578550539502.png' />
+            <Image src={productImage} />
           </ImgContainer>
         </SubCell>
         <SubCell padding='5px 5px'>
@@ -52,18 +61,28 @@ function ProductRow({ product }: ProductRowProps) {
       </Cell>
       <Cell width='15%' direction='column'>
         <SubCell padding='5px 0px'>
-          <QuantityCounter />
+          <QuantityCounter
+            type='main'
+            quantity={quantity}
+            increase={increase}
+            decrease={decrease}
+          />
         </SubCell>
         <SubCell padding='5px 0px'>
-          <QuantityCounter />
+          <QuantityCounter
+            type='etc'
+            quantity={etcQuantity}
+            increase={increase}
+            decrease={decrease}
+          />
         </SubCell>
       </Cell>
       <Cell width='15%' direction='column'>
         <SubCell padding='5px 0px'>
-          <Text>15000</Text>
+          <Text>{price * quantity}원</Text>
         </SubCell>
         <SubCell padding='5px 0px'>
-          <Text>3000</Text>
+          <Text>{etcPrice * etcQuantity}원</Text>
         </SubCell>
       </Cell>
       <Cell width='10%' direction=''>
@@ -120,4 +139,4 @@ const Text = styled.p`
   font-size: 12px;
 `;
 
-export default ProductRow;
+export default React.memo(ProductRow);

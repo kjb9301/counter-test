@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-function QuantityCounter() {
+import { useCounter } from '../../../hooks/useCounter';
+import { useBasketDispatch } from '../../../hooks/useContext';
+type Props = {
+  type: string;
+  quantity: number;
+  increase: (type: string) => void;
+  decrease: (type: string) => void;
+};
+function QuantityCounter({ type, quantity, increase, decrease }: Props) {
   return (
     <Wrapper>
-      <Button>-</Button>
-      <Input type='number' />
-      <Button>+</Button>
+      <Button onClick={() => decrease(type)}>-</Button>
+      <Input type='number' value={quantity} />
+      <Button onClick={() => increase(type)}>+</Button>
     </Wrapper>
   );
 }
@@ -28,4 +36,4 @@ const Button = styled.button`
   height: 20px;
 `;
 
-export default QuantityCounter;
+export default React.memo(QuantityCounter);

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { BasketItem } from '../../../lib/types/basketPageTypes';
+import { useBasketState } from '../../../hooks/useContext';
 
 import ProductTableHeader from './ProductTableHeader';
 import ProductCategoryRow from './ProductCategoryRow';
@@ -13,6 +14,9 @@ type ProductTableByAreaProps = {
 };
 
 function ProductTableByArea({ list }: ProductTableByAreaProps) {
+  // const [total, setTotal] = useState(0);
+  // console.log(total);
+
   return (
     <Wrapper>
       <ProductTableHeader />
