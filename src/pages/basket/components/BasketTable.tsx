@@ -53,8 +53,9 @@ function BasketTable() {
   return (
     <Wrapper>
       <input type='checkbox' /> 전체선택
-      {basketItemsByArea.map((list) => {
-        return <ProductTableByArea list={list} />;
+      {basketItemsByArea.map((list, index) => {
+        const key = `list_${index}`;
+        return <ProductTableByArea key={key} list={list} />;
       })}
     </Wrapper>
   );
