@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import Modal from '../../../components/Modal';
+import UserAddrModal from '../../../components/modal/UserAddrModal';
+import Portal from '../../../components/Portal';
+
 function UserInfo() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const modifyAddress = () => {
+    setModalVisible(!modalVisible);
+  };
+
   return (
     <Wrapper>
       <Line>
         <Title>주소</Title>
         <Text>{`서울시 강남구 도산대로 17`}</Text>
-        <Button>주소 변경하기</Button>
+        <Button onClick={modifyAddress}>주소 변경하기</Button>
+        <Modal visible={modalVisible}>
+          <UserAddrModal />
+        </Modal>
       </Line>
       <Line>
         <Title>가능한 배송방식</Title>
