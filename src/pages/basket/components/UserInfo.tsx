@@ -3,30 +3,52 @@ import styled from 'styled-components';
 
 import Modal from '../../../components/Modal';
 import UserAddrModal from '../../../components/modal/UserAddrModal';
-import Portal from '../../../components/Portal';
 
 function UserInfo() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [address, setAddress] = useState('서울시 강남구 도산대로 17');
+  const [inputValue, setInputValue] = useState(address);
 
   const modifyAddress = () => {
+    setAddress(inputValue);
+    closeModal();
+  };
+
+  const handleChangeAddr = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setInputValue(value);
+  };
+
+  const openModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const closeModal = () => {
     setModalVisible(!modalVisible);
   };
 
   return (
-    <Wrapper>
-      <Line>
-        <Title>주소</Title>
-        <Text>{`서울시 강남구 도산대로 17`}</Text>
-        <Button onClick={modifyAddress}>주소 변경하기</Button>
-        <Modal visible={modalVisible}>
-          <UserAddrModal />
-        </Modal>
-      </Line>
-      <Line>
-        <Title>가능한 배송방식</Title>
-        <Text>{`직접배송, 고속버스 탁승`}</Text>
-      </Line>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Line>
+          <Title>주소</Title>
+          <Text>{address}</Text>
+          <Button onClick={openModal}>주소 변경하기</Button>
+        </Line>
+        <Line>
+          <Title>가능한 배송방식</Title>
+          <Text>{`직접배송, 고속버스 탁승`}</Text>
+        </Line>
+      </Wrapper>
+      <Modal visible={modalVisible}>
+        <UserAddrModal
+          inputValue={inputValue}
+          handleChangeAddr={handleChangeAddr}
+          modifyAddress={modifyAddress}
+          closeModal={closeModal}
+        />
+      </Modal>
+    </>
   );
 }
 
@@ -60,4 +82,4 @@ const Button = styled.button`
   padding: 0 5px;
 `;
 
-export default UserInfo;
+export default React.memo(UserInfo);

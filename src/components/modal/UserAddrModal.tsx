@@ -1,14 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function UserAddrModal() {
+type UserAddrModalProps = {
+  inputValue: string;
+  handleChangeAddr: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  modifyAddress: () => void;
+  closeModal: () => void;
+};
+
+function UserAddrModal({
+  inputValue,
+  handleChangeAddr,
+  modifyAddress,
+  closeModal,
+}: UserAddrModalProps) {
   return (
     <Wrapper>
       <Text>주소 변경</Text>
-      <Input type='text' />
+      <Input type='text' value={inputValue} onChange={handleChangeAddr} />
       <Buttons>
-        <Button bgColor='red'>취소</Button>
-        <Button bgColor='#33A27A  '>변경</Button>
+        <Button bgColor='red' onClick={closeModal}>
+          취소
+        </Button>
+        <Button bgColor='#33A27A' onClick={modifyAddress}>
+          변경
+        </Button>
       </Buttons>
     </Wrapper>
   );
