@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import { useCounter } from '../../../hooks/useCounter';
-import { useBasketDispatch } from '../../../hooks/useContext';
 type Props = {
   type: string;
   quantity: number;
   increase: (type: string) => void;
   decrease: (type: string) => void;
 };
+
 function QuantityCounter({ type, quantity, increase, decrease }: Props) {
   return (
     <Wrapper>

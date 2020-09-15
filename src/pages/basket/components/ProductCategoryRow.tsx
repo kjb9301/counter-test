@@ -1,15 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const categories = [
-  { text: '상품정보', width: '200px' },
-  { text: '구분', width: '200px' },
-  { text: '가격', width: '150px' },
-  { text: '수량', width: '100px' },
-  { text: '합계', width: '100px' },
-  { text: '관리', width: '' },
-];
-
 function ProductCategoryRow() {
   return (
     <Wrapper>

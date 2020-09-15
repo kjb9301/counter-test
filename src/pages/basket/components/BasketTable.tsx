@@ -8,7 +8,7 @@ import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
 import ProductTableByArea from './ProductTableByArea';
 
 function BasketTable() {
-  console.log('basket table');
+  // console.log('basket table');
   const { basketItemsByArea } = useBasketState();
   const dispatch = useBasketDispatch();
 
@@ -31,7 +31,7 @@ function BasketTable() {
         });
     };
     getData();
-  }, []);
+  }, [dispatch]);
 
   const createProductListByArea = (basketList: BasketItem[]) => {
     const deliveryPlaceArr = basketList.map((item) => item.deliveryPlace);
@@ -42,7 +42,7 @@ function BasketTable() {
     const basketListByArea: BasketItem[][] = [];
     noDupdeliveryPlaceArr.forEach((place, index) => {
       basketListByArea[index] = basketList.filter(
-        (item) => place == item.deliveryPlace
+        (item) => place === item.deliveryPlace
       );
     });
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsArrowBarUp } from 'react-icons/bs';
 import styled from 'styled-components';
 
 function ScrollToTop() {
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
 
   return (
     <Wrapper>

@@ -26,7 +26,7 @@ function DeliveryTypeInfo() {
         });
     };
     getData();
-  }, []);
+  }, [dispatch]);
 
   if (!deliveryFees) return null;
   return (
