@@ -1,12 +1,16 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-function ProductSum() {
+type ProductSumProps = {
+  total: number;
+};
+
+function ProductSum({ total }: ProductSumProps) {
   return (
     <Wrapper>
       <Container>
         <Text>
-          총 상품금액 <Value>12000</Value>원
+          총 상품금액 <Value>{total}</Value>원
         </Text>
         <Circle>+</Circle>
         <Text>

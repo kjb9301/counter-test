@@ -4,6 +4,7 @@ import {
   BasketItem,
   BasketByArea,
   DeliveryFee,
+  RowItem,
 } from '../lib/types/basketPageTypes';
 
 type InitialState = {
@@ -14,6 +15,7 @@ type InitialState = {
     type: string;
     price: number;
   };
+  rowInfoes: RowItem[];
 };
 
 type Action =
@@ -30,8 +32,12 @@ type Action =
       payload: { type: string; price: number };
     }
   | {
-      type: 'GET_TOTAL';
-      payload: any;
+      type: 'GET_ROW_INFO';
+      payload: RowItem;
+    }
+  | {
+      type: 'UPDATE_ROW';
+      payload: RowItem;
     };
 
 type InitialDispatch = Dispatch<Action>;
@@ -44,6 +50,7 @@ const initialState: InitialState = {
     type: '',
     price: 0,
   },
+  rowInfoes: [],
 };
 
 export const StateContext = createContext<InitialState | null>(null);
@@ -71,6 +78,23 @@ function basketReducer(state: InitialState, action: Action): InitialState {
           type,
           price,
         },
+      };
+    case 'GET_ROW_INFO':
+      return {
+        ...state,
+        rowInfoes: [...state.rowInfoes, action.payload],
+      };
+    case 'UPDATE_ROW':
+      const { id, quantity, etcQuantity } = action.payload;
+      return {
+        ...state,
+        rowInfoes: [
+          ...state.rowInfoes.map((item) => {
+            return item.id === id
+              ? (item = { ...item, quantity, etcQuantity })
+              : item;
+          }),
+        ],
       };
     default:
       throw new Error('unhandled action');

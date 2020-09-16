@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { BsHeart, BsTrash } from 'react-icons/bs';
 
 import { BasketItem } from '../../../lib/types/basketPageTypes';
 import { useCounter } from '../../../hooks/useCounter';
+import { useBasketDispatch } from '../../../hooks/useContext';
 
 import QuantityCounter from './QuantityCounter';
 
@@ -12,8 +13,11 @@ type ProductRowProps = {
 };
 
 function ProductRow({ product }: ProductRowProps) {
+  const dispatch = useBasketDispatch();
   const {
+    id,
     title,
+    deliveryPlace,
     productImage,
     productOption,
     etcTitle,
@@ -21,6 +25,27 @@ function ProductRow({ product }: ProductRowProps) {
     etcPrice,
   } = product;
   const { quantity, etcQuantity, increase, decrease } = useCounter();
+
+  useEffect(() => {
+    dispatch({
+      type: 'GET_ROW_INFO',
+      payload: {
+        id,
+        deliveryPlace,
+        price,
+        quantity,
+        etcPrice,
+        etcQuantity,
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: 'UPDATE_ROW',
+      payload: { id, quantity, etcQuantity },
+    });
+  }, [quantity, etcQuantity]);
 
   return (
     <Wrapper>

@@ -18,3 +18,12 @@ export type DeliveryFee = {
   deliveryType: string;
   deliveryPrice: number;
 };
+
+export type RowItem = {
+  id: number;
+  deliveryPlace?: string;
+  price?: number;
+  quantity: number;
+  etcPrice?: number;
+  etcQuantity: number;
+};
