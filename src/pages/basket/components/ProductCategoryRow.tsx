@@ -4,53 +4,24 @@ import styled from 'styled-components';
 function ProductCategoryRow() {
   return (
     <Wrapper>
-      <Category className='etc' />
-      <Category className='product'>상품정보</Category>
-      <Category className='division'>구분</Category>
-      <Category className='price'>가격</Category>
-      <Category className='quantity'>수량</Category>
-      <Category className='sum'>합계</Category>
-      <Category className='management'>관리</Category>
+      <Cell width='5%' />
+      <Cell width='20%'>상품정보</Cell>
+      <Cell width='20%'>구분</Cell>
+      <Cell width='15%'>가격</Cell>
+      <Cell width='15%'>수량</Cell>
+      <Cell width='15%'>합계</Cell>
+      <Cell width='10%'>관리</Cell>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.ul`
-  border: 1px solid red;
   display: flex;
   background-color: #f2f2f2;
-
-  .etc {
-    width: 5%;
-  }
-
-  .product {
-    width: 20%;
-  }
-
-  .division {
-    width: 20%;
-  }
-
-  .price {
-    width: 15%;
-  }
-
-  .quantity {
-    width: 15%;
-  }
-
-  .sum {
-    width: 15%;
-  }
-
-  .management {
-    width: 10%;
-  }
 `;
 
-const Category = styled.li`
-  border: 1px solid blue;
+const Cell = styled.li<{ width: string }>`
+  width: ${(props) => props.width};
   text-align: center;
   padding: 5px 0;
 `;

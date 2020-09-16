@@ -39,6 +39,7 @@ const flexCenter = css`
 const Wrapper = styled.div`
   height: 50px;
   background-color: #f2f2f2;
+  margin-bottom: 20px;
   ${flexCenter}
 `;
 
