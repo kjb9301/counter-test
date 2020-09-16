@@ -1,9 +1,15 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
 
-import { BasketItem, DeliveryFee, RowItem } from '../lib/types/basketPageTypes';
+import {
+  BasketItem,
+  BasketByArea,
+  DeliveryFee,
+  RowItem,
+} from '../lib/types/basketPageTypes';
 
 type InitialState = {
   basketList: BasketItem[] | null;
+  basketListByArea: BasketByArea | null;
   deliveryFees: DeliveryFee[] | null;
   deliveryType: {
     type: string;
@@ -11,12 +17,18 @@ type InitialState = {
     free: boolean;
   };
   rowInfoes: RowItem[];
+  allCheck: boolean;
+  allCheckArea: boolean;
 };
 
 type Action =
   | {
       type: 'GET_BASKET_ITEMS';
       payload: BasketItem[];
+    }
+  | {
+      type: 'GET_BASKET_LIST_BY_AREA';
+      payload: BasketByArea;
     }
   | {
       type: 'GET_DELIVERY_FEES';
@@ -41,12 +53,21 @@ type Action =
   | {
       type: 'REMOVE_PRODUCT';
       payload: any;
+    }
+  | {
+      type: 'ALL_CHECK';
+      payload: boolean;
+    }
+  | {
+      type: 'ALL_CHECK_AREA';
+      payload: { place: string; allCheckArea: boolean };
     };
 
 type InitialDispatch = Dispatch<Action>;
 
 const initialState: InitialState = {
   basketList: null,
+  basketListByArea: null,
   deliveryFees: null,
   deliveryType: {
     type: '',
@@ -54,6 +75,8 @@ const initialState: InitialState = {
     free: false,
   },
   rowInfoes: [],
+  allCheck: false,
+  allCheckArea: false,
 };
 
 export const StateContext = createContext<InitialState | null>(null);
@@ -65,6 +88,11 @@ function basketReducer(state: InitialState, action: Action): InitialState {
       return {
         ...state,
         basketList: action.payload,
+      };
+    case 'GET_BASKET_LIST_BY_AREA':
+      return {
+        ...state,
+        basketListByArea: action.payload,
       };
     case 'GET_DELIVERY_FEES':
       return {
@@ -112,6 +140,26 @@ function basketReducer(state: InitialState, action: Action): InitialState {
         basketList: state.basketList.filter(
           (item) => item.id !== action.payload
         ),
+      };
+    case 'ALL_CHECK':
+      return {
+        ...state,
+        allCheck: action.payload,
+      };
+    case 'ALL_CHECK_AREA':
+      const { place, allCheckArea } = action.payload;
+      return {
+        ...state,
+        allCheckArea: !allCheckArea,
+        basketListByArea: {
+          ...state.basketListByArea,
+          [place]: {
+            list: state.basketListByArea[place].list.map(
+              (item) => (item = { ...item, checked: allCheckArea })
+            ),
+            allCheckArea,
+          },
+        },
       };
     default:
       throw new Error('unhandled action');

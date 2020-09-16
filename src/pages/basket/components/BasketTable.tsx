@@ -4,15 +4,17 @@ import axios from 'axios';
 import { BasketItem, BasketByArea } from '../../../lib/types/basketPageTypes';
 import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
 
+import CheckBox from '../../../components/CheckBox';
 import ProductTableByArea from './ProductTableByArea';
 
 function BasketTable() {
-  const { basketList } = useBasketState();
+  const { basketList, basketListByArea, allCheck } = useBasketState();
+  console.log(basketListByArea);
   const dispatch = useBasketDispatch();
   const [deliveryPlaces, setDeliveryPlaces] = useState<string[] | null>(null);
-  const [basketListByArea, setBasketListByArea] = useState<BasketByArea | null>(
-    null
-  );
+  // const [basketListByArea, setBasketListByArea] = useState<BasketByArea | null>(
+  //   null
+  // );
 
   useEffect(() => {
     const getData = async () => {
@@ -20,7 +22,11 @@ function BasketTable() {
         .get('data/basketItems.json')
         .then((res) => {
           if (res.status === 200) {
-            const basketList = res.data.basketItems;
+            const basketItems: BasketItem[] = res.data.basketItems;
+            const basketList = basketItems.map((item) => {
+              return (item = { ...item, checked: false });
+            });
+
             dispatch({
               type: 'GET_BASKET_ITEMS',
               payload: basketList,
@@ -36,15 +42,29 @@ function BasketTable() {
 
   useEffect(() => {
     if (basketList) {
-      const { basketListByArea, noDupDeliveryPlaces } = createProductListByArea(
-        basketList
+      const { basketListByArea, noDupDeliveryPlaces } = createBasketListByArea(
+        basketList,
+        allCheck
       );
       setDeliveryPlaces(noDupDeliveryPlaces);
-      setBasketListByArea(basketListByArea);
+      dispatch({
+        type: 'GET_BASKET_LIST_BY_AREA',
+        payload: basketListByArea,
+      });
     }
   }, [basketList]);
 
-  const createProductListByArea = (basketList: BasketItem[]) => {
+  useEffect(() => {
+    dispatch({
+      type: 'GET_BASKET_LIST_BY_AREA',
+      payload: basketListByArea,
+    });
+  }, [basketListByArea]);
+
+  const createBasketListByArea = (
+    basketList: BasketItem[],
+    allCheck: boolean
+  ) => {
     const deliveryPlaces = basketList.map((item) => item.deliveryPlace);
     const noDupDeliveryPlaces = deliveryPlaces.filter(
       (item, index, arr) => arr.indexOf(item) === index
@@ -52,18 +72,30 @@ function BasketTable() {
 
     const basketListByArea: BasketByArea = {};
     noDupDeliveryPlaces.forEach((place) => {
-      basketListByArea[place] = basketList.filter(
-        (item) => place === item.deliveryPlace
-      );
+      basketListByArea[place] = {
+        list: basketList.filter((item) => place === item.deliveryPlace),
+        allCheckArea: false,
+      };
     });
 
     return { basketListByArea, noDupDeliveryPlaces };
   };
 
+  const handleChangeAllChk = () => {
+    dispatch({
+      type: 'ALL_CHECK',
+      payload: !allCheck,
+    });
+  };
+
   if (!basketListByArea) return null;
   return (
     <>
-      <input type='checkbox' /> 전체선택
+      <CheckBox
+        text='전체선택'
+        checked={allCheck}
+        onChange={handleChangeAllChk}
+      />
       {deliveryPlaces.map((place) => {
         return (
           <ProductTableByArea

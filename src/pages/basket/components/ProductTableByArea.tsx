@@ -10,7 +10,10 @@ import ProductRow from './ProductRow';
 import ProductSum from './ProductSum';
 
 type ProductTableByAreaProps = {
-  basketListByArea: BasketItem[];
+  basketListByArea: {
+    list: BasketItem[];
+    allCheckArea: boolean;
+  };
   place: string;
 };
 
@@ -18,6 +21,7 @@ function ProductTableByArea({
   basketListByArea,
   place,
 }: ProductTableByAreaProps) {
+  const { list, allCheckArea } = basketListByArea;
   const { rowInfoes } = useBasketState();
   const [total, setTotal] = useState(0);
 
@@ -34,19 +38,19 @@ function ProductTableByArea({
   }, [rowInfoes]);
 
   return (
-    <Wrapper>
-      <ProductTableHeader place={place} total={total} />
+    <>
+      <ProductTableHeader
+        place={place}
+        total={total}
+        allCheckArea={allCheckArea}
+      />
       <ProductCategoryRow />
-      {basketListByArea.map((product) => {
+      {list.map((product) => {
         return <ProductRow key={product.id} product={product} />;
       })}
       <ProductSum total={total} />
-    </Wrapper>
+    </>
   );
 }
-
-const Wrapper = styled.div`
-  border: 1px solid blue;
-`;
 
 export default ProductTableByArea;

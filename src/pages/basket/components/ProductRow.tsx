@@ -6,6 +6,7 @@ import { BasketItem } from '../../../lib/types/basketPageTypes';
 import { useCounter } from '../../../hooks/useCounter';
 import { useBasketDispatch } from '../../../hooks/useContext';
 
+import CheckBox from '../../../components/CheckBox';
 import QuantityCounter from './QuantityCounter';
 
 type ProductRowProps = {
@@ -23,6 +24,7 @@ function ProductRow({ product }: ProductRowProps) {
     etcTitle,
     price,
     etcPrice,
+    checked,
   } = product;
   const { quantity, etcQuantity, increase, decrease } = useCounter();
 
@@ -57,7 +59,11 @@ function ProductRow({ product }: ProductRowProps) {
   return (
     <Wrapper>
       <Cell width='5%' direction=''>
-        <Input type='checkbox' />
+        <CheckBox
+          text=''
+          checked={checked}
+          onChange={() => console.log('change')}
+        />
       </Cell>
       <Cell width='20%' direction='row'>
         <SubCell padding='10px 10px'>

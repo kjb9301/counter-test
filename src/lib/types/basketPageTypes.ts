@@ -8,10 +8,14 @@ export type BasketItem = {
   price: number;
   etcTitle: string;
   etcPrice: number;
+  checked?: boolean;
 };
 
 export type BasketByArea = {
-  [key: string]: BasketItem[];
+  [key: string]: {
+    list: BasketItem[];
+    allCheckArea: boolean;
+  };
 };
 
 export type DeliveryFee = {
