@@ -52,7 +52,7 @@ function ProductRow({ product }: ProductRowProps) {
   const removeProduct = () => {
     dispatch({
       type: 'REMOVE_PRODUCT',
-      payload: id as any,
+      payload: id,
     });
   };
 

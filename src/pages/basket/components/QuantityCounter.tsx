@@ -18,10 +18,13 @@ function QuantityCounter({ type, quantity, increase, decrease }: Props) {
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  height: 20px;
+`;
 
 const Input = styled.input`
   width: 35px;
+  height: inherit;
 
   &::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button {
@@ -32,7 +35,9 @@ const Input = styled.input`
 
 const Button = styled.button`
   width: 20px;
-  height: 20px;
+  height: inherit;
+  border: none;
+  background-color: #b8b7b4;
 `;
 
 export default React.memo(QuantityCounter);
