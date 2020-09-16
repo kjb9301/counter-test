@@ -47,6 +47,13 @@ function ProductRow({ product }: ProductRowProps) {
     });
   }, [quantity, etcQuantity]);
 
+  const removeProduct = () => {
+    dispatch({
+      type: 'REMOVE_PRODUCT',
+      payload: id as any,
+    });
+  };
+
   return (
     <Wrapper>
       <Cell width='5%' direction=''>
@@ -106,7 +113,7 @@ function ProductRow({ product }: ProductRowProps) {
       </Cell>
       <Cell width='10%' direction=''>
         <BsHeart />
-        <BsTrash />
+        <BsTrash onClick={removeProduct} />
       </Cell>
     </Wrapper>
   );

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
 
 import { BasketItem, BasketByArea } from '../../../lib/types/basketPageTypes';
@@ -8,10 +7,13 @@ import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
 import ProductTableByArea from './ProductTableByArea';
 
 function BasketTable() {
-  // console.log('basket table');
-  const { basketListByArea } = useBasketState();
+  const { basketList } = useBasketState();
   const dispatch = useBasketDispatch();
   const [deliveryPlaces, setDeliveryPlaces] = useState<string[] | null>(null);
+  const [basketListByArea, setBasketListByArea] = useState<BasketByArea | null>(
+    null
+  );
+
   useEffect(() => {
     const getData = async () => {
       await axios
@@ -19,15 +21,9 @@ function BasketTable() {
         .then((res) => {
           if (res.status === 200) {
             const basketList = res.data.basketItems;
-            const {
-              basketListByArea,
-              noDupDeliveryPlaces,
-            } = createProductListByArea(basketList);
-
-            setDeliveryPlaces(noDupDeliveryPlaces);
             dispatch({
               type: 'GET_BASKET_ITEMS',
-              payload: { basketList, basketListByArea },
+              payload: basketList,
             });
           }
         })
@@ -37,6 +33,16 @@ function BasketTable() {
     };
     getData();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (basketList) {
+      const { basketListByArea, noDupDeliveryPlaces } = createProductListByArea(
+        basketList
+      );
+      setDeliveryPlaces(noDupDeliveryPlaces);
+      setBasketListByArea(basketListByArea);
+    }
+  }, [basketList]);
 
   const createProductListByArea = (basketList: BasketItem[]) => {
     const deliveryPlaces = basketList.map((item) => item.deliveryPlace);
@@ -56,7 +62,7 @@ function BasketTable() {
 
   if (!basketListByArea) return null;
   return (
-    <Wrapper>
+    <>
       <input type='checkbox' /> 전체선택
       {deliveryPlaces.map((place) => {
         return (
@@ -67,12 +73,8 @@ function BasketTable() {
           />
         );
       })}
-    </Wrapper>
+    </>
   );
 }
-
-const Wrapper = styled.div`
-  border: 1px solid red;
-`;
 
 export default BasketTable;

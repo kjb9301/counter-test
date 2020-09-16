@@ -23,7 +23,7 @@ function ProductTableByArea({
 
   const filteredRows = rowInfoes.filter((item) => item.deliveryPlace === place);
 
-  const getTotal = filteredRows.reduce((acc: any, obj: any) => {
+  const getTotal = filteredRows.reduce((acc, obj) => {
     const { price, quantity, etcPrice, etcQuantity } = obj;
     const total = price * quantity + etcPrice * etcQuantity;
     return acc + total;

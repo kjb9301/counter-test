@@ -1,15 +1,9 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
 
-import {
-  BasketItem,
-  BasketByArea,
-  DeliveryFee,
-  RowItem,
-} from '../lib/types/basketPageTypes';
+import { BasketItem, DeliveryFee, RowItem } from '../lib/types/basketPageTypes';
 
 type InitialState = {
   basketList: BasketItem[] | null;
-  basketListByArea: BasketByArea | null;
   deliveryFees: DeliveryFee[] | null;
   deliveryType: {
     type: string;
@@ -22,7 +16,7 @@ type InitialState = {
 type Action =
   | {
       type: 'GET_BASKET_ITEMS';
-      payload: { basketList: BasketItem[]; basketListByArea: BasketByArea };
+      payload: BasketItem[];
     }
   | {
       type: 'GET_DELIVERY_FEES';
@@ -43,13 +37,16 @@ type Action =
   | {
       type: 'FREE_DELIVERY_PRICE';
       payload: boolean;
+    }
+  | {
+      type: 'REMOVE_PRODUCT';
+      payload: any;
     };
 
 type InitialDispatch = Dispatch<Action>;
 
 const initialState: InitialState = {
   basketList: null,
-  basketListByArea: null,
   deliveryFees: null,
   deliveryType: {
     type: '',
@@ -65,11 +62,9 @@ export const DispatchContext = createContext<InitialDispatch | null>(null);
 function basketReducer(state: InitialState, action: Action): InitialState {
   switch (action.type) {
     case 'GET_BASKET_ITEMS':
-      const { basketList, basketListByArea } = action.payload;
       return {
         ...state,
-        basketList,
-        basketListByArea,
+        basketList: action.payload,
       };
     case 'GET_DELIVERY_FEES':
       return {
@@ -110,6 +105,13 @@ function basketReducer(state: InitialState, action: Action): InitialState {
           ...state.deliveryType,
           free: action.payload,
         },
+      };
+    case 'REMOVE_PRODUCT':
+      return {
+        ...state,
+        basketList: state.basketList.filter(
+          (item) => item.id !== action.payload
+        ),
       };
     default:
       throw new Error('unhandled action');
