@@ -1,11 +1,16 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { useBasketState } from '../../../hooks/useContext';
+
 type ProductSumProps = {
   total: number;
 };
 
 function ProductSum({ total }: ProductSumProps) {
+  const { deliveryType } = useBasketState();
+  const deliveryPrice = deliveryType.free ? 0 : deliveryType.price;
+
   return (
     <Wrapper>
       <Container>
@@ -14,11 +19,11 @@ function ProductSum({ total }: ProductSumProps) {
         </Text>
         <Circle>+</Circle>
         <Text>
-          배송비 <Value>1500</Value>원
+          배송비 <Value>{deliveryPrice}</Value>원
         </Text>
         <Circle>=</Circle>
         <Text>
-          총 합계 <Value>20000</Value>원
+          총 합계 <Value>{total + deliveryPrice}</Value>원
         </Text>
       </Container>
     </Wrapper>

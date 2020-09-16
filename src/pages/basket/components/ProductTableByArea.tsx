@@ -35,7 +35,7 @@ function ProductTableByArea({
 
   return (
     <Wrapper>
-      <ProductTableHeader place={place} />
+      <ProductTableHeader place={place} total={total} />
       <ProductCategoryRow />
       {basketListByArea.map((product) => {
         return <ProductRow key={product.id} product={product} />;

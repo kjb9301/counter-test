@@ -14,6 +14,7 @@ type InitialState = {
   deliveryType: {
     type: string;
     price: number;
+    free: boolean;
   };
   rowInfoes: RowItem[];
 };
@@ -38,6 +39,10 @@ type Action =
   | {
       type: 'UPDATE_ROW';
       payload: RowItem;
+    }
+  | {
+      type: 'FREE_DELIVERY_PRICE';
+      payload: boolean;
     };
 
 type InitialDispatch = Dispatch<Action>;
@@ -49,6 +54,7 @@ const initialState: InitialState = {
   deliveryType: {
     type: '',
     price: 0,
+    free: false,
   },
   rowInfoes: [],
 };
@@ -75,6 +81,7 @@ function basketReducer(state: InitialState, action: Action): InitialState {
       return {
         ...state,
         deliveryType: {
+          ...state.deliveryType,
           type,
           price,
         },
@@ -95,6 +102,14 @@ function basketReducer(state: InitialState, action: Action): InitialState {
               : item;
           }),
         ],
+      };
+    case 'FREE_DELIVERY_PRICE':
+      return {
+        ...state,
+        deliveryType: {
+          ...state.deliveryType,
+          free: action.payload,
+        },
       };
     default:
       throw new Error('unhandled action');
