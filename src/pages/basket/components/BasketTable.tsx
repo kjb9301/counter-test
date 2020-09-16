@@ -10,12 +10,8 @@ import PayInfo from './PayInfo';
 
 function BasketTable() {
   const { basketList, basketListByArea, allCheck } = useBasketState();
-  console.log(basketListByArea);
   const dispatch = useBasketDispatch();
   const [deliveryPlaces, setDeliveryPlaces] = useState<string[] | null>(null);
-  // const [basketListByArea, setBasketListByArea] = useState<BasketByArea | null>(
-  //   null
-  // );
 
   useEffect(() => {
     const getData = async () => {
@@ -52,14 +48,14 @@ function BasketTable() {
         payload: basketListByArea,
       });
     }
-  }, [basketList]);
+  }, [basketList, dispatch]);
 
   useEffect(() => {
     dispatch({
       type: 'GET_BASKET_LIST_BY_AREA',
       payload: basketListByArea,
     });
-  }, [basketListByArea]);
+  }, [basketListByArea, dispatch]);
 
   const createBasketListByArea = (basketList: BasketItem[]) => {
     const deliveryPlaces = basketList.map((item) => item.deliveryPlace);

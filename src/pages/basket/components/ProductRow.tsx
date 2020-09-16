@@ -47,7 +47,7 @@ function ProductRow({ product }: ProductRowProps) {
       type: 'UPDATE_ROW',
       payload: { id, quantity, etcQuantity },
     });
-  }, [quantity, etcQuantity]);
+  }, [quantity, etcQuantity, dispatch]);
 
   const removeProduct = () => {
     dispatch({
@@ -164,10 +164,6 @@ const Image = styled.img`
   width: inherit;
   max-height: 100%;
 `;
-
-const Input = styled.input.attrs((props) => ({
-  type: props.type,
-}))``;
 
 const Text = styled.p`
   font-size: 12px;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
+import { useBasketDispatch } from '../../../hooks/useContext';
 import { getPlaceName } from '../../../lib/utils/changeIntoKorean';
 
 import CheckBox from '../../../components/CheckBox';

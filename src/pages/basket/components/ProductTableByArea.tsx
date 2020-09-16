@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 
 import { BasketItem } from '../../../lib/types/basketPageTypes';
 import { useBasketState } from '../../../hooks/useContext';
@@ -35,7 +34,7 @@ function ProductTableByArea({
 
   useEffect(() => {
     setTotal(getTotal);
-  }, [rowInfoes]);
+  }, [rowInfoes, getTotal]);
 
   return (
     <>
