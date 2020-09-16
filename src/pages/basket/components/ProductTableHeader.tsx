@@ -3,11 +3,18 @@ import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-function ProductTableHeader() {
+import { getPlaceName } from '../../../lib/utils/changeIntoKorean';
+
+type ProductTableHeaderProps = {
+  place: string;
+};
+
+function ProductTableHeader({ place }: ProductTableHeaderProps) {
+  const placeName = getPlaceName(place);
   return (
     <Wrapper>
       <TopContainer>
-        <input type='checkbox' /> 호남소재 배송상품
+        <input type='checkbox' /> {placeName}소재 배송상품
         <InfoText>20000원 추가하면 무료배송</InfoText>
       </TopContainer>
       <ProgressBar now={60} />

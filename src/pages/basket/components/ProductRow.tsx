@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { BsHeart, BsTrash } from 'react-icons/bs';
 
@@ -20,7 +20,6 @@ function ProductRow({ product }: ProductRowProps) {
     price,
     etcPrice,
   } = product;
-
   const { quantity, etcQuantity, increase, decrease } = useCounter();
 
   return (

@@ -5,9 +5,13 @@ import styled from 'styled-components';
 function ScrollToTop() {
   // const [visible, setVisible] = useState(false);
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Wrapper>
-      <Icon />
+      <Icon onClick={scrollToTop} />
     </Wrapper>
   );
 }

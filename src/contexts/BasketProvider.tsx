@@ -1,10 +1,14 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
 
-import { BasketItem, DeliveryFee } from '../lib/types/basketPageTypes';
+import {
+  BasketItem,
+  BasketByArea,
+  DeliveryFee,
+} from '../lib/types/basketPageTypes';
 
 type InitialState = {
-  basketItems: BasketItem[] | null;
-  basketItemsByArea: BasketItem[][] | null;
+  basketList: BasketItem[] | null;
+  basketListByArea: BasketByArea | null;
   deliveryFees: DeliveryFee[] | null;
   deliveryType: {
     type: string;
@@ -15,7 +19,7 @@ type InitialState = {
 type Action =
   | {
       type: 'GET_BASKET_ITEMS';
-      payload: { list: BasketItem[]; listByArea: BasketItem[][] };
+      payload: { basketList: BasketItem[]; basketListByArea: BasketByArea };
     }
   | {
       type: 'GET_DELIVERY_FEES';
@@ -24,13 +28,17 @@ type Action =
   | {
       type: 'SELECT_DELIVERY_TYPE';
       payload: { type: string; price: number };
+    }
+  | {
+      type: 'GET_TOTAL';
+      payload: any;
     };
 
 type InitialDispatch = Dispatch<Action>;
 
 const initialState: InitialState = {
-  basketItems: null,
-  basketItemsByArea: null,
+  basketList: null,
+  basketListByArea: null,
   deliveryFees: null,
   deliveryType: {
     type: '',
@@ -44,11 +52,11 @@ export const DispatchContext = createContext<InitialDispatch | null>(null);
 function basketReducer(state: InitialState, action: Action): InitialState {
   switch (action.type) {
     case 'GET_BASKET_ITEMS':
-      const { list, listByArea } = action.payload;
+      const { basketList, basketListByArea } = action.payload;
       return {
         ...state,
-        basketItems: list,
-        basketItemsByArea: listByArea,
+        basketList,
+        basketListByArea,
       };
     case 'GET_DELIVERY_FEES':
       return {

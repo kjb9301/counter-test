@@ -10,6 +10,10 @@ export type BasketItem = {
   etcPrice: number;
 };
 
+export type BasketByArea = {
+  [key: string]: BasketItem[];
+};
+
 export type DeliveryFee = {
   deliveryType: string;
   deliveryPrice: number;
