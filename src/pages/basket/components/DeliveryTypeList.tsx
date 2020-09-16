@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { DeliveryFee } from '../../../lib/types/basketPageTypes';
@@ -19,11 +19,12 @@ type DeliveryTypeListProps = {
 
 function DeliveryTypeList({ deliveryFees }: DeliveryTypeListProps) {
   const dispatch = useBasketDispatch();
+  const [selectedType, setSelectedType] = useState('');
 
   const handleClickType = (type: string) => {
     const index = deliveryFees.findIndex((item) => item.deliveryType === type);
     const typePrice = index < 0 ? 0 : deliveryFees[index].deliveryPrice;
-
+    setSelectedType(type);
     dispatch({
       type: 'SELECT_DELIVERY_TYPE',
       payload: { type, price: typePrice },
@@ -34,7 +35,10 @@ function DeliveryTypeList({ deliveryFees }: DeliveryTypeListProps) {
     <Wrapper>
       {deliveryTypes.map((item) => {
         return (
-          <TypeItem key={item.id}>
+          <TypeItem
+            key={item.id}
+            className={selectedType === item.id ? 'selected' : ''}
+          >
             <Button onClick={() => handleClickType(item.id)}>
               {item.text}
             </Button>
@@ -50,6 +54,11 @@ const Wrapper = styled.ul`
   grid-template-columns: repeat(3, 200px);
   grid-template-rows: repeat(2, 50px);
   margin-bottom: 20px;
+
+  .selected {
+    border: 3px solid #000;
+    color: #000;
+  }
 `;
 
 const TypeItem = styled.li`
