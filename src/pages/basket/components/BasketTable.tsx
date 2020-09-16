@@ -6,6 +6,7 @@ import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
 
 import CheckBox from '../../../components/CheckBox';
 import ProductTableByArea from './ProductTableByArea';
+import PayInfo from './PayInfo';
 
 function BasketTable() {
   const { basketList, basketListByArea, allCheck } = useBasketState();
@@ -43,8 +44,7 @@ function BasketTable() {
   useEffect(() => {
     if (basketList) {
       const { basketListByArea, noDupDeliveryPlaces } = createBasketListByArea(
-        basketList,
-        allCheck
+        basketList
       );
       setDeliveryPlaces(noDupDeliveryPlaces);
       dispatch({
@@ -61,10 +61,7 @@ function BasketTable() {
     });
   }, [basketListByArea]);
 
-  const createBasketListByArea = (
-    basketList: BasketItem[],
-    allCheck: boolean
-  ) => {
+  const createBasketListByArea = (basketList: BasketItem[]) => {
     const deliveryPlaces = basketList.map((item) => item.deliveryPlace);
     const noDupDeliveryPlaces = deliveryPlaces.filter(
       (item, index, arr) => arr.indexOf(item) === index
@@ -105,6 +102,7 @@ function BasketTable() {
           />
         );
       })}
+      <PayInfo />
     </>
   );
 }

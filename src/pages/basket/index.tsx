@@ -25,8 +25,9 @@ function BasketPage() {
 
 const Wrapper = styled.main`
   width: 80%;
-  padding: 30px 50px;
+  padding: 50px;
   margin: 0 auto;
+  overflow: hidden;
 `;
 
 export default BasketPage;
