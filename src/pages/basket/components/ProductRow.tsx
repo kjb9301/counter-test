@@ -26,7 +26,7 @@ function ProductRow({ product }: ProductRowProps) {
     etcPrice,
     checked,
   } = product;
-  const { quantity, etcQuantity, increase, decrease } = useCounter();
+  const { quantity, etcQuantity, increase, decrease, onChange } = useCounter();
 
   useEffect(() => {
     dispatch({
@@ -98,6 +98,7 @@ function ProductRow({ product }: ProductRowProps) {
             quantity={quantity}
             increase={increase}
             decrease={decrease}
+            onChange={onChange}
           />
         </SubCell>
         <SubCell padding='5px 0px'>
@@ -106,6 +107,7 @@ function ProductRow({ product }: ProductRowProps) {
             quantity={etcQuantity}
             increase={increase}
             decrease={decrease}
+            onChange={onChange}
           />
         </SubCell>
       </Cell>

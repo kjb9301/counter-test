@@ -22,10 +22,20 @@ export function useCounter() {
     }
   };
 
+  const onChange = (type: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (type === 'main') {
+      setQuantity(value);
+    } else {
+      setEtcQuantity(value);
+    }
+  };
+
   return {
     quantity,
     etcQuantity,
     increase,
     decrease,
+    onChange,
   };
 }
