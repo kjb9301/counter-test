@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { RootState } from '../../../store/modules';
+import { getBaksetItems } from '../../../store/modules/basket';
 import { BasketItem, BasketByArea } from '../../../lib/types/basketPageTypes';
-import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
+import { useBasketState } from '../../../hooks/useContext';
 
 import CheckBox from '../../../components/CheckBox';
 import ProductTableByArea from './ProductTableByArea';
 import PayInfo from './PayInfo';
 
 function BasketTable() {
-  const { basketList, basketListByArea, allCheck } = useBasketState();
-  const dispatch = useBasketDispatch();
+  const { allCheck } = useBasketState();
   const [deliveryPlaces, setDeliveryPlaces] = useState<string[] | null>(null);
+  const [
+    baksetItemsByArea,
+    setBaksetItemsByArea,
+  ] = useState<BasketByArea | null>(null);
+
+  const dispatch = useDispatch();
+  const { basketItems } = useSelector((state: RootState) => state.basket);
+  console.log(basketItems);
 
   useEffect(() => {
     const getData = async () => {
@@ -19,15 +29,12 @@ function BasketTable() {
         .get('data/basketItems.json')
         .then((res) => {
           if (res.status === 200) {
-            const basketItems: BasketItem[] = res.data.basketItems;
-            const basketList = basketItems.map((item) => {
+            const data: BasketItem[] = res.data.basketItems;
+            const basketItems = data.map((item) => {
               return (item = { ...item, checked: false });
             });
 
-            dispatch({
-              type: 'GET_BASKET_ITEMS',
-              payload: basketList,
-            });
+            dispatch(getBaksetItems(basketItems));
           }
         })
         .catch((err) => {
@@ -35,27 +42,16 @@ function BasketTable() {
         });
     };
     getData();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    if (basketList) {
-      const { basketListByArea, noDupDeliveryPlaces } = createBasketListByArea(
-        basketList
-      );
-      setDeliveryPlaces(noDupDeliveryPlaces);
-      dispatch({
-        type: 'GET_BASKET_LIST_BY_AREA',
-        payload: basketListByArea,
-      });
-    }
-  }, [basketList, dispatch]);
-
-  useEffect(() => {
-    dispatch({
-      type: 'GET_BASKET_LIST_BY_AREA',
-      payload: basketListByArea,
-    });
-  }, [basketListByArea, dispatch]);
+    if (!basketItems) return;
+    const { basketListByArea, noDupDeliveryPlaces } = createBasketListByArea(
+      basketItems
+    );
+    setDeliveryPlaces(noDupDeliveryPlaces);
+    setBaksetItemsByArea(basketListByArea);
+  }, [basketItems, dispatch]);
 
   const createBasketListByArea = (basketList: BasketItem[]) => {
     const deliveryPlaces = basketList.map((item) => item.deliveryPlace);
@@ -81,7 +77,7 @@ function BasketTable() {
     });
   };
 
-  if (!basketListByArea) return null;
+  if (!baksetItemsByArea) return null;
   return (
     <>
       <CheckBox
@@ -94,7 +90,7 @@ function BasketTable() {
           <ProductTableByArea
             key={place}
             place={place}
-            basketListByArea={basketListByArea[place]}
+            basketListByArea={baksetItemsByArea[place]}
           />
         );
       })}
