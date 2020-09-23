@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '../../../store/modules';
 import { BasketItem, BasketByArea } from '../../../lib/types/basketPageTypes';
 import { useBasketState, useBasketDispatch } from '../../../hooks/useContext';
 
@@ -12,6 +14,9 @@ function BasketTable() {
   const { basketList, basketListByArea, allCheck } = useBasketState();
   const dispatch = useBasketDispatch();
   const [deliveryPlaces, setDeliveryPlaces] = useState<string[] | null>(null);
+
+  const { basketItems } = useSelector((state: RootState) => state.basket);
+  console.log(basketItems);
 
   useEffect(() => {
     const getData = async () => {
