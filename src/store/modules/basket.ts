@@ -2,7 +2,10 @@ import { BasketItem } from '../../lib/types/basketPageTypes';
 
 const GET_BASKET_ITEMS = 'basket/GET_BASKET_ITEMS' as const;
 
-export const getBaksetItems = () => ({ type: GET_BASKET_ITEMS });
+export const getBaksetItems = (data: BasketItem[]) => ({
+  type: GET_BASKET_ITEMS,
+  payload: data,
+});
 
 type BasketActions = ReturnType<typeof getBaksetItems>;
 
@@ -19,6 +22,7 @@ function basket(state: BasketState = initialState, action: BasketActions) {
     case GET_BASKET_ITEMS:
       return {
         ...state,
+        basketItems: action.payload,
       };
     default:
       return state;
