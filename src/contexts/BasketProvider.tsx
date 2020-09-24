@@ -146,21 +146,6 @@ function basketReducer(state: InitialState, action: Action): InitialState {
         ...state,
         allCheck: action.payload,
       };
-    case 'ALL_CHECK_AREA':
-      const { place, allCheckArea } = action.payload;
-      return {
-        ...state,
-        allCheckArea: !allCheckArea,
-        basketListByArea: {
-          ...state.basketListByArea,
-          [place]: {
-            list: state.basketListByArea[place].list.map(
-              (item) => (item = { ...item, checked: allCheckArea })
-            ),
-            allCheckArea,
-          },
-        },
-      };
     default:
       throw new Error('unhandled action');
   }

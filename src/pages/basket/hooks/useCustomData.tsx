@@ -24,10 +24,9 @@ function useCustomData(basketItems: BasketItem[]) {
 
     const basketItemsByArea: BasketByArea = {};
     noDupDeliveryPlaces.forEach((place) => {
-      basketItemsByArea[place] = {
-        list: basketItems.filter((item) => place === item.deliveryPlace),
-        allCheckArea: false,
-      };
+      basketItemsByArea[place] = basketItems.filter(
+        (item) => place === item.deliveryPlace
+      );
     });
 
     return { noDupDeliveryPlaces, basketItemsByArea };

@@ -1,43 +1,44 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import { useBasketDispatch } from '../../../hooks/useContext';
 import { getPlaceName } from '../../../lib/utils/changeIntoKorean';
+import { checkAllArea } from '../../../store/modules/basket';
+import { RootState } from '../../../store/modules';
 
+import useTest from '../hooks/test';
 import CheckBox from '../../../components/CheckBox';
 
 type ProductTableHeaderProps = {
   place: string;
   total: number;
-  allCheckArea: boolean;
 };
 
 const MAX = 20000;
 
-function ProductTableHeader({
-  place,
-  total,
-  allCheckArea,
-}: ProductTableHeaderProps) {
-  const dispatch = useBasketDispatch();
+function ProductTableHeader({ place, total }: ProductTableHeaderProps) {
+  const dispatch1 = useBasketDispatch();
   const placeName = getPlaceName(place);
   const percent = (total / MAX) * 100;
 
+  const { checkArea, handleChange } = useTest(place);
+
+  const dispatch = useDispatch();
+  // const { checkArea } = useSelector((state: RootState) => state.basket);
+
   useEffect(() => {
     const free = total >= MAX;
-    dispatch({
+    dispatch1({
       type: 'FREE_DELIVERY_PRICE',
       payload: free,
     });
   }, [total, dispatch]);
 
   const handleAllCheckArea = () => {
-    dispatch({
-      type: 'ALL_CHECK_AREA',
-      payload: { place, allCheckArea: !allCheckArea },
-    });
+    dispatch(checkAllArea(place));
   };
 
   return (
@@ -45,8 +46,8 @@ function ProductTableHeader({
       <TopContainer>
         <CheckBox
           text={`${placeName}소재 배송상품`}
-          checked={allCheckArea}
-          onChange={handleAllCheckArea}
+          checked={checkArea}
+          onChange={handleChange}
         />
         <InfoText>{`${MAX}원 추가하면 무료배송`}</InfoText>
       </TopContainer>

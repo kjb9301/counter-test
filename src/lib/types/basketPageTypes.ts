@@ -12,10 +12,7 @@ export type BasketItem = {
 };
 
 export type BasketByArea = {
-  [key: string]: {
-    list: BasketItem[];
-    allCheckArea: boolean;
-  };
+  [key: string]: BasketItem[];
 };
 
 export type DeliveryFee = {
