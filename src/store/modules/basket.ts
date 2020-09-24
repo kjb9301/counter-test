@@ -14,7 +14,7 @@ type BasketState = {
 };
 
 const initialState: BasketState = {
-  basketItems: null,
+  basketItems: [],
 };
 
 function basket(state: BasketState = initialState, action: BasketActions) {
